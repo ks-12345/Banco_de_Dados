@@ -1,4 +1,12 @@
 /* Fundo fixo */
+:root{
+--Verde: #009C3B;
+--Amarelo: #FFDF00;
+--Azul: #002776;
+--Branco: #FFFFFF;
+}
+
+
 body {
     font-family: 'Poppins', sans-serif;
     background: url('https://i.pinimg.com/736x/d7/b8/99/d7b89990bb9fedbef2fefeb4eb60265f.jpg') no-repeat center center fixed;
@@ -7,8 +15,10 @@ body {
     padding: 0;
     height: 100vh;
     position: relative;
-    color: #333;
+    color: black;
 }
+
+
 
 /* Overlay escuro */
 .overlay {
@@ -25,7 +35,8 @@ body {
 .container {
     position: relative;
     z-index: 1;
-    background-color: rgba(255, 255, 255, 0.95);
+    opacity:0.8;
+    background-color: var(--Branco);
     max-width: 450px;
     margin: 100px auto;
     padding: 30px 40px;
@@ -71,7 +82,32 @@ h1 {
 }
 
 .btn-voltar:hover {
-    background-color: #6d3d32;
+    background-color: var(--Azul);
+    transform: scale(1.05);
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.cadastrar {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--Azul);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.cadastrar:hover {
+    background-color: var(--Amarelo);
     transform: scale(1.05);
 }
 

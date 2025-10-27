@@ -1,14 +1,14 @@
 <?php
 // Recebe os dados do formulário
-$nome = $_POST['nome'];
-$email = $_POST['email'];
-$cpf = $_POST['cpf'];
-$endereco = $_POST['endereco'];
-$profissao = $_POST['profissao'];
-$data_nasc = $_POST['data_nasc'];
+$nome = $_POST['NOME'];
+$email = $_POST['EMAIL'];
+$cpf = $_POST['CPF'];
+$endereco = $_POST['ENDERECO'];
+$profissao = $_POST['PROFISSAO'];
+$data_nasc = $_POST['DATA_NASC'];
 
 // Conexão com o banco
-$conn = new mysqli("localhost", "root", "SenaiSp", "ReservaEquipamentos");
+$conn = new mysqli("localhost", "root", "senaisp", "ReservaEquipamentos");
 
 // Verifica se a conexão foi bem-sucedida
 if ($conn->connect_error) {
