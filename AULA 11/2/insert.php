@@ -3,7 +3,7 @@
 $nome = $_POST['nome_aluno'];
 $email = $_POST['email'];
 $data_nasc = $_POST['data_nascimento'];
-$id = $_POST['id_aluno'];
+
 
 // Conexão com o banco
 $conn = new mysqli("localhost", "root", "senaisp", "CURSOS");
@@ -14,8 +14,8 @@ if ($conn->connect_error) {
     $status = "erro";
 } else {
     // Monta o comando SQL
-    $sql = "INSERT INTO ALUNOS (nome_aluno, email, data_nascimento, id_aluno)
-            VALUES ('$nome', '$email', '$data_nasc', '$id')";
+    $sql = "INSERT INTO ALUNOS (nome_aluno, email, data_nascimento)
+            VALUES ('$nome', '$email', '$data_nasc')";
 
     // Executa o comando SQL
     if ($conn->query($sql) === TRUE) {
