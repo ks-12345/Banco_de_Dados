@@ -1,97 +1,93 @@
 <?php
 
 namespace Oficina\Model;
-;
 
-require_once 'Bebida.php';
-require_once 'Connection.php';
+require_once __DIR__ . '/Produto.php';
+require_once __DIR__ . '/Connection.php';
 
-class BebidaDAO {
+use Oficina\Produto;
+use Oficina\Connection;
+
+class ProdutoDAO {
     private $conn;
 
     public function __construct() {
         $this->conn = Connection::getInstance();
 
-        // Cria a tabela se não existir
+        // Cria a tabela Produtos se não existir
         $this->conn->exec("
-            CREATE TABLE IF NOT EXISTS bebidas (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                nome VARCHAR(100) NOT NULL UNIQUE,
-                categoria VARCHAR(50) NOT NULL,
-                volume VARCHAR(20) NOT NULL,
-                valor DECIMAL(10,2) NOT NULL,
-                qtde INT NOT NULL
+            CREATE TABLE IF NOT EXISTS Produtos (
+                Id_Produto INT AUTO_INCREMENT PRIMARY KEY,
+                Nome VARCHAR(255) NOT NULL,
+                Especificacoes VARCHAR(255) NOT NULL,
+                Preco_Produto DECIMAL(6,2) NOT NULL
             )
         ");
     }
-    
 
-    // CREATE
-    public function criarBebida(Bebida $bebida) {
+    // CREATE - Cadastrar novo produto
+    public function criarProduto(Produto $produto) {
         $stmt = $this->conn->prepare("
-            INSERT INTO bebidas (nome, categoria, volume, valor, qtde)
-            VALUES (:nome, :categoria, :volume, :valor, :qtde)
+            INSERT INTO Produtos (Nome, Especificacoes, Preco_Produto)
+            VALUES (:nome, :especificacoes, :preco)
         ");
         $stmt->execute([
-            ':nome' => $bebida->getNome(),
-            ':categoria' => $bebida->getCategoria(),
-            ':volume' => $bebida->getVolume(),
-            ':valor' => $bebida->getValor(),
-            ':qtde' => $bebida->getQtde()
+            ':nome' => $produto->getNome(),
+            ':especificacoes' => $produto->getEspecificacoes(),
+            ':preco' => $produto->getPreco()
         ]);
     }
 
-    // READ
-    public function lerBebidas() {
-        $stmt = $this->conn->query("SELECT * FROM bebidas ORDER BY nome");
+    // READ - Listar todos os produtos
+    public function lerProdutos() {
+        $stmt = $this->conn->query("SELECT * FROM Produtos ORDER BY Nome");
         $result = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new Bebida(
-                $row['nome'],
-                $row['categoria'],
-                $row['volume'],
-                $row['valor'],
-                $row['qtde']
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $result[] = new Produto(
+                $row['Nome'],
+                $row['Especificacoes'],
+                $row['Preco_Produto'],
+                $row['Id_Produto']
             );
         }
         return $result;
     }
 
-    // UPDATE
-    public function atualizarBebida($nomeOriginal, $novoNome, $categoria, $volume, $valor, $qtde) {
+    // UPDATE - Atualizar produto existente
+    public function editarProduto($idOriginal, $nome, $especificacoes, $preco) {
         $stmt = $this->conn->prepare("
-            UPDATE bebidas
-            SET nome = :novoNome, categoria = :categoria, volume = :volume, valor = :valor, qtde = :qtde
-            WHERE nome = :nomeOriginal
+            UPDATE Produtos
+            SET Nome = :nome, 
+                Especificacoes = :especificacoes, 
+                Preco_Produto = :preco
+            WHERE Id_Produto = :id
         ");
         $stmt->execute([
-            ':novoNome' => $novoNome,
-            ':categoria' => $categoria,
-            ':volume' => $volume,
-            ':valor' => $valor,
-            ':qtde' => $qtde,
-            ':nomeOriginal' => $nomeOriginal
+            ':nome' => $nome,
+            ':especificacoes' => $especificacoes,
+            ':preco' => $preco,
+            ':id' => $idOriginal
         ]);
     }
 
-    // DELETE
-    public function excluirBebida($nome) {
-        $stmt = $this->conn->prepare("DELETE FROM bebidas WHERE nome = :nome");
-        $stmt->execute([':nome' => $nome]);
+    // DELETE - Excluir produto
+    public function excluirProduto($id) {
+        $stmt = $this->conn->prepare("DELETE FROM Produtos WHERE Id_Produto = :id");
+        $stmt->execute([':id' => $id]);
     }
 
-    // BUSCAR POR NOME
-    public function buscarPorNome($nome) {
-        $stmt = $this->conn->prepare("SELECT * FROM bebidas WHERE nome = :nome LIMIT 1");
-        $stmt->execute([':nome' => $nome]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    // BUSCAR por ID
+    public function buscarProdutoPorId($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM Produtos WHERE Id_Produto = :id LIMIT 1");
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
         if ($row) {
-            return new Bebida(
-                $row['nome'],
-                $row['categoria'],
-                $row['volume'],
-                $row['valor'],
-                $row['qtde']
+            return new Produto(
+                $row['Nome'],
+                $row['Especificacoes'],
+                $row['Preco_Produto'],
+                $row['Id_Produto']
             );
         }
         return null;

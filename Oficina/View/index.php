@@ -1,12 +1,11 @@
 <?php
 
-namespace Oficina;
-
 require_once __DIR__ . '/../Controller/ProdutoController.php';
+
+use Oficina\Controllers\ProdutoController;
 
 $controller = new ProdutoController();
 
-// ===== EXPLICAÇÃO DESTA PARTE =====
 // Verifica se o formulário foi enviado (método POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Pega a ação do formulário, se não existir usa '' (string vazia)
