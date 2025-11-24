@@ -1,19 +1,18 @@
 <?php
 
-namespace Oficina;
-
 require_once __DIR__ . '/../Controller/ProdutoController.php';
+
+use Oficina\Controllers\ProdutoController;
 
 $controller = new ProdutoController();
 
 $produtoParaEditar = null;
 $idOriginal = 0;
 
-// ===== EXPLICAÇÃO DESTA PARTE =====
 // Verifica se o formulário foi enviado (POST) E se a ação é 'atualizar'
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualizar') {
     
-    // Pega os dados do formulário, usando '' ou 0 como valor padrão se não existir
+    // Pega os dados do formulário
     $idOriginal = $_POST['idOriginal'] ?? 0;
     $nome = $_POST['nome'] ?? '';
     $especificacoes = $_POST['especificacoes'] ?? '';
@@ -22,9 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['acao'] ?? '') === 'atualiz
     // Chama o método editar do controller
     $controller->editar($idOriginal, $nome, $especificacoes, $preco);
     
-    // ===== EXPLICAÇÃO DESTA PARTE =====
-    // header() redireciona para a página principal
-    // exit() para a execução do script (SEMPRE usar após header)
+    // Redireciona para a página principal
     header('Location: index.php');
     exit();
 }

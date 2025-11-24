@@ -71,7 +71,7 @@ class MecanicaDAO {
             ':cor' => $cor,
             ':ano' => $ano,
             ':placa' => $placa,
-            ':modeloOriginal' => $modeloOriginal
+            ':modeloOriginal' => $modeloOriginal 
         ]);
     }
 

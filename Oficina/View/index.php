@@ -2,12 +2,15 @@
 
 require_once __DIR__ . '/../Controller/ProdutoController.php';
 
+<<<<<<< HEAD
 use Oficina\Controller\ProdutoController;
 
+=======
+use Oficina\Controllers\ProdutoController;
+>>>>>>> 430f8c8c7eca6cbefc42f3d3b090cfc01b7b8cad
 
 $controller = new ProdutoController();
 
-// ===== EXPLICAÇÃO DESTA PARTE =====
 // Verifica se o formulário foi enviado (método POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Pega a ação do formulário, se não existir usa '' (string vazia)
