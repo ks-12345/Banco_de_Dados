@@ -18,7 +18,7 @@ CREATE TABLE Fornecedor (
 
 
 
-CREATE TABLE Peca (
+CREATE TABLE Placa (
     Pcodigo INT PRIMARY KEY,
     Pnome VARCHAR(255) NOT NULL,
     Cor VARCHAR(50) NOT NULL,
@@ -43,6 +43,6 @@ CREATE TABLE Fornecimento (
     Quantidade INT,
     PRIMARY KEY (Fcod, Pcod, PRcod),
     FOREIGN KEY (Fcod) REFERENCES Fornecedor(Fcodigo),
-    FOREIGN KEY (Pcod) REFERENCES Peca(Pcodigo),
+    FOREIGN KEY (Pcod) REFERENCES Placa(Pcodigo),
     FOREIGN KEY (PRcod) REFERENCES Projeto(PRcod)
 );

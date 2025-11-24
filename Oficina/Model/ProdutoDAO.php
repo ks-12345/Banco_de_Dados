@@ -20,7 +20,7 @@ class BebidaDAO {
                 categoria VARCHAR(50) NOT NULL,
                 volume VARCHAR(20) NOT NULL,
                 valor DECIMAL(10,2) NOT NULL,
-                qtde INT NOT NULL
+                peca INT NOT NULL
             )
         ");
     }
@@ -29,15 +29,15 @@ class BebidaDAO {
     // CREATE
     public function criarBebida(Bebida $bebida) {
         $stmt = $this->conn->prepare("
-            INSERT INTO bebidas (nome, categoria, volume, valor, qtde)
-            VALUES (:nome, :categoria, :volume, :valor, :qtde)
+            INSERT INTO bebidas (nome, categoria, volume, valor, peca)
+            VALUES (:nome, :categoria, :volume, :valor, :peca)
         ");
         $stmt->execute([
             ':nome' => $bebida->getNome(),
             ':categoria' => $bebida->getCategoria(),
             ':volume' => $bebida->getVolume(),
             ':valor' => $bebida->getValor(),
-            ':qtde' => $bebida->getQtde()
+            ':peca' => $bebida->getPlaca()
         ]);
     }
 
@@ -51,17 +51,17 @@ class BebidaDAO {
                 $row['categoria'],
                 $row['volume'],
                 $row['valor'],
-                $row['qtde']
+                $row['peca']
             );
         }
         return $result;
     }
 
     // UPDATE
-    public function atualizarBebida($nomeOriginal, $novoNome, $categoria, $volume, $valor, $qtde) {
+    public function atualizarBebida($nomeOriginal, $novoNome, $categoria, $volume, $valor, $peca) {
         $stmt = $this->conn->prepare("
             UPDATE bebidas
-            SET nome = :novoNome, categoria = :categoria, volume = :volume, valor = :valor, qtde = :qtde
+            SET nome = :novoNome, categoria = :categoria, volume = :volume, valor = :valor, peca = :peca
             WHERE nome = :nomeOriginal
         ");
         $stmt->execute([
@@ -69,7 +69,7 @@ class BebidaDAO {
             ':categoria' => $categoria,
             ':volume' => $volume,
             ':valor' => $valor,
-            ':qtde' => $qtde,
+            ':peca' => $peca,
             ':nomeOriginal' => $nomeOriginal
         ]);
     }
@@ -91,7 +91,7 @@ class BebidaDAO {
                 $row['categoria'],
                 $row['volume'],
                 $row['valor'],
-                $row['qtde']
+                $row['peca']
             );
         }
         return null;

@@ -16,7 +16,7 @@ CREATE TABLE produto (
     nome_produto VARCHAR(255) NOT NULL,
     valor DECIMAL(5,2) NOT NULL,
     descricao VARCHAR(255),
-    qtde INT
+    peca INT
 );
 
 CREATE TABLE fornecedor (

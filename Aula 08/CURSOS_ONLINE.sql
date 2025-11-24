@@ -4,7 +4,7 @@ USE CURSOS;
 
 CREATE TABLE CURSOS (
 carga_horaria varchar(20),
-titulo varchar(50),
+modelo varchar(50),
 descricao varchar(255),
 status VARCHAR(255) DEFAULT 'Ativo' CHECK (Status IN ('Ativo', 'Inativo')),
 id_curso int not null  auto_increment PRIMARY KEY
@@ -41,7 +41,7 @@ FOREIGN KEY(id_inscricao) REFERENCES INSCRICOES (id_inscricao)
 ALTER TABLE INSCRICOES ADD FOREIGN KEY(id_aluno) REFERENCES ALUNOS (id_aluno);
 
 -- CURSOS
-INSERT INTO CURSOS (carga_horaria, titulo, descricao, status) VALUES
+INSERT INTO CURSOS (carga_horaria, modelo, descricao, status) VALUES
 ('40h', 'Matemática Básica', 'Curso introdutório de matemática', 'Ativo'),
 ('60h', 'Programação em Python', 'Curso de programação para iniciantes', 'Inativo'),
 ('30h', 'Inglês Básico', 'Curso básico de inglês', 'Inativo'),

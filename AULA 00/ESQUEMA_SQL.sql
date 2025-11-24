@@ -11,20 +11,20 @@ CPF varchar (14) not null PRIMARY KEY,
 Nome_Cliente varchar (150) not null
 );
 
-CREATE TABLE Livros (
-Cod_Livro int auto_increment,
-Autor varchar (100) not null,
+CREATE TABLE Carros (
+Cod_Carro int auto_increment,
+Cor varchar (100) not null,
 Ediora varchar (100) not null,
-Genero varchar (100) not null,
+Marca varchar (100) not null,
 Preco decimal,
 Quantidade int(15),
-Titulo varchar (100),
-PRIMARY KEY(Cod_Livro,Titulo)
+Modelo varchar (100),
+PRIMARY KEY(Cod_Carro,Modelo)
 );
 
-CREATE TABLE Autores  (
+CREATE TABLE Cores  (
 Data_Nascimento date,
-Cod_Autor int auto_increment PRIMARY KEY,
+Cod_Cor int auto_increment PRIMARY KEY,
 Nome varchar (100) not null,
 Nacionalidade varchar (100) not null,
 CNPJ varchar (100) not null
@@ -45,27 +45,27 @@ CREATE TABLE Venda (
   Data_Venda date NOT NULL,
   Cod_Venda int AUTO_INCREMENT PRIMARY KEY,
   CPF varchar(14) NOT NULL,
-  Cod_Livro int NOT NULL,
+  Cod_Carro int NOT NULL,
   FOREIGN KEY (CPF) REFERENCES Clientes(CPF),
-  FOREIGN KEY (Cod_Livro) REFERENCES Livros(Cod_Livro)
+  FOREIGN KEY (Cod_Carro) REFERENCES Carros(Cod_Carro)
 );
 
 
 CREATE TABLE Escreve (
 Cod_Escreve int auto_increment  PRIMARY KEY,
-Cod_Livro int,
-Titulo varchar (100),
-Cod_Autor int,
-FOREIGN KEY(Titulo) REFERENCES Livros (Cod_Livro,Titulo),
-FOREIGN KEY(Cod_Autor) REFERENCES Autores  (Cod_Autor)
+Cod_Carro int,
+Modelo varchar (100),
+Cod_Cor int,
+FOREIGN KEY(Modelo) REFERENCES Carros (Cod_Carro,Modelo),
+FOREIGN KEY(Cod_Cor) REFERENCES Cores  (Cod_Cor)
 );
 
 CREATE TABLE Obter (
 Cod_Obter int auto_increment PRIMARY KEY,
-Cod_Livro int,
-Titulo varchar (100),
+Cod_Carro int,
+Modelo varchar (100),
 CNPJ varchar (100) not null,
-FOREIGN KEY(Titulo) REFERENCES Livros (Cod_Livro,Titulo)
+FOREIGN KEY(Modelo) REFERENCES Carros (Cod_Carro,Modelo)
 );
 
-ALTER TABLE Autores  ADD FOREIGN KEY(CNPJ) REFERENCES Editoras (CNPJ);
+ALTER TABLE Cores  ADD FOREIGN KEY(CNPJ) REFERENCES Editoras (CNPJ);

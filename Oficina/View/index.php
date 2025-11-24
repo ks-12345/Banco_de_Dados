@@ -1,8 +1,9 @@
 <?php
 
-namespace Oficina;
-
 require_once __DIR__ . '/../Controller/ProdutoController.php';
+
+use Oficina\Controller\ProdutoController;
+
 
 $controller = new ProdutoController();
 

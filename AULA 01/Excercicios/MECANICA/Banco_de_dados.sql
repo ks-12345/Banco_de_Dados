@@ -1,7 +1,7 @@
 -- Remove as tabelas existentes para garantir um ambiente limpo
 DROP TABLE IF EXISTS Fornecimento;
 DROP TABLE IF EXISTS Projeto;
-DROP TABLE IF EXISTS Peca;
+DROP TABLE IF EXISTS Placa;
 DROP TABLE IF EXISTS Fornecedor;
 DROP TABLE IF EXISTS Instituicao;
 DROP TABLE IF EXISTS Cidade;
@@ -24,9 +24,9 @@ CREATE TABLE Fornecedor (
     FOREIGN KEY (Ccod) REFERENCES Cidade(Ccod)
 );
 
--- Criação da tabela Peca
+-- Criação da tabela Placa
 -- Com a nova chave estrangeira para Cidade
-CREATE TABLE Peca (
+CREATE TABLE Placa (
     Pcod INT PRIMARY KEY,
     Pnome VARCHAR(255) NOT NULL,
     Cor VARCHAR(50) NOT NULL,
@@ -53,13 +53,13 @@ CREATE TABLE Fornecimento (
     Quantidade INT,
     PRIMARY KEY (Fcod, Pcod, PRcod),
     FOREIGN KEY (Fcod) REFERENCES Fornecedor(Fcod),
-    FOREIGN KEY (Pcod) REFERENCES Peca(Pcod),
+    FOREIGN KEY (Pcod) REFERENCES Placa(Pcod),
     FOREIGN KEY (PRcod) REFERENCES Projeto(PRcod)
 );
 
 -- Criação de índices para otimização de consultas
 CREATE INDEX idx_fornecedor_ccod ON Fornecedor (Ccod);
-CREATE INDEX idx_peca_ccod ON Peca (Ccod);
+CREATE INDEX idx_peca_ccod ON Placa (Ccod);
 CREATE INDEX idx_projeto_ccod ON Projeto (Ccod);
 CREATE INDEX idx_fornecimento_fcod ON Fornecimento (Fcod);
 CREATE INDEX idx_fornecimento_pcod ON Fornecimento (Pcod);

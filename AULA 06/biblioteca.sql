@@ -2,15 +2,15 @@ create database Biblioteca;
 
 use Biblioteca;
 
-create table Livros(
-codlivro int not null auto_increment PRIMARY KEY,
-titulo varchar(255) not null,
-autor varchar(255) not null,
+create table Carros(
+codcarro int not null auto_increment PRIMARY KEY,
+modelo varchar(255) not null,
+dono varchar(255) not null,
 editora varchar(255) not null,
 emprestimo varchar(3) not null
 );
  
-INSERT INTO Livros (titulo, autor, editora, emprestimo) VALUES
+INSERT INTO Carros (modelo, dono, editora, emprestimo) VALUES
 
 ('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Agir', 'Sim'),
 ('Harry Potter e a Pedra Filosofal', 'J.K. Rowling', 'Rocco', 'Sim'),
@@ -35,5 +35,5 @@ INSERT INTO cliente (nome, cpf, telefone, endereco, email) VALUES
 
 select * from cliente ;
 
-select * from Livros;
+select * from Carros;
 
