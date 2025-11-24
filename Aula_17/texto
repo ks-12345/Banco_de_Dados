@@ -1,0 +1,145 @@
+CREATE DATABASE Oficina;
+
+USE Oficina;
+
+CREATE TABLE Mecanicos (
+Nome_Mec Varchar (255) not null,
+Id_Mec int auto_increment PRIMARY KEY,
+Salario decimal (6,2) not null
+);
+
+CREATE TABLE Veiculos (
+Ano varchar (4) not null,
+Id_Veic int auto_increment  PRIMARY KEY,
+Marca varchar(255) not null,
+Cor varchar(50) not null,
+Modelo varchar (200) not null,
+Placa varchar(7) not null
+);
+
+CREATE TABLE Clientes (
+Telefone varchar(15) not null,
+Nome_Cliente varchar(255) not null,
+Id_Cliente int auto_increment PRIMARY KEY,
+Endereco varchar(255) not null,
+Id_Veic int NOT NULL,
+FOREIGN KEY(Id_Veic) REFERENCES Veiculos (Id_Veic)
+);
+
+   CREATE TABLE Servicos (
+Descricao varchar(255) not null,
+Id_Servico int auto_increment PRIMARY KEY,
+Tipo_Servico Varchar(255),
+Preco decimal(8,2),
+Id_Produto int not null,
+FOREIGN KEY(Id_Produto) REFERENCES Produtos (Id_Produto)
+);
+
+CREATE TABLE Produtos (
+Id_Produto int auto_increment  PRIMARY KEY,
+Especificacoes varchar(255) not null,
+Nome varchar(255) not null,
+Preco_Produto decimal(6,2) not null
+);
+
+CREATE TABLE OS (
+Numero_Ordem int auto_increment  PRIMARY KEY,
+Total decimal (8,2),
+Responsaveis varchar(255),
+Descriçao_Ordem varchar(255),
+Qtde_Produto int,
+Id_Produto int,
+FOREIGN KEY(Id_Produto) REFERENCES Produtos (Id_Produto)
+);
+
+CREATE TABLE Estoque (
+Id_Esto int auto_increment  PRIMARY KEY,
+Data_Incio date,
+Qtde_Produto varchar(255),
+ Valor_Produto decimal (8,2),
+Data_Final date,
+Nome_Produtos varchar(255)
+);
+
+CREATE TABLE realiza (
+Id_Servico int ,
+Id_Mec int,
+FOREIGN KEY(Id_Servico) REFERENCES Servicos (Id_Servico),
+FOREIGN KEY(Id_Mec) REFERENCES Mecanicos (Id_Mec)
+);
+
+CREATE TABLE Tem (
+Id_Esto int ,
+Id_Produto int ,
+FOREIGN KEY(Id_Esto) REFERENCES Estoque (Id_Esto),
+FOREIGN KEY(Id_Produto) REFERENCES Produtos (Id_Produto)
+);
+
+CREATE TABLE Referente (
+Id_Veic int,
+Numero_Ordem int,
+FOREIGN KEY(Id_Veic) REFERENCES Veiculos (Id_Veic),
+FOREIGN KEY(Numero_Ordem) REFERENCES OS (Numero_Ordem)
+);
+
+CREATE TABLE Executa (
+Id_Mec int,
+Numero_Ordem int,
+FOREIGN KEY(Id_Mec) REFERENCES Mecanicos (Id_Mec),
+FOREIGN KEY(Numero_Ordem) REFERENCES OS (Numero_Ordem)
+);
+
+ALTER TABLE Servicos ADD FOREIGN KEY(Id_Produto) REFERENCES Produtos (Id_Produto);
+
+INSERT INTO Mecanicos (Nome_Mec, Salario) VALUES
+('Carlos Almeida', 3200.00),
+('João Pereira', 4500.00),
+('Marcos Santos', 3800.00);
+
+INSERT INTO Veiculos (Ano, Marca, Cor, Modelo, Placa) VALUES
+('2018', 'Toyota', 'Prata', 'Corolla', 'ABC1234'),
+('2015', 'Honda', 'Preto', 'Civic', 'XYZ5678'),
+('2020', 'Ford', 'Branco', 'Ka', 'JKL9087');
+
+INSERT INTO Produtos (Especificacoes, Nome, Preco_Produto) VALUES
+('Óleo sintético 5W30', 'Óleo Motor', 45.50),
+('Filtro de ar esportivo', 'Filtro de Ar', 30.00),
+('Pastilha de freio dianteira', 'Pastilha de Freio', 120.00);
+
+INSERT INTO Clientes (Telefone, Nome_Cliente, Endereco, Id_Veic) VALUES
+('11999990000', 'Ana Silva', 'Rua A, 123', 1),
+('11988880000', 'Pedro Costa', 'Av B, 456', 2),
+('11977770000', 'Mariana Torres', 'Rua C, 789', 3);
+
+INSERT INTO Servicos (Descricao, Tipo_Servico, Preco, Id_Produto) VALUES
+('Troca de óleo completa', 'Manutenção', 150.00, 1),
+('Troca do filtro de ar', 'Manutenção', 80.00, 2),
+('Troca de pastilha de freio', 'Reparo', 250.00, 3);
+
+INSERT INTO OS (Total, Responsaveis, Descriçao_Ordem, Qtde_Produto, Id_Produto) VALUES
+(250.00, 'Carlos Almeida', 'Troca de óleo', 1, 1),
+(180.00, 'João Pereira', 'Troca de filtro de ar', 1, 2),
+(370.00, 'Marcos Santos', 'Troca de pastilhas', 1, 3);
+
+INSERT INTO Estoque (Data_Incio, Qtde_Produto, Valor_Produto, Data_Final, Nome_Produtos) VALUES
+('2025-01-01', '50', 45.50, '2025-06-01', 'Óleo Motor'),
+('2025-01-15', '70', 30.00, '2025-06-15', 'Filtro de Ar'),
+('2025-02-01', '40', 120.00, '2025-07-01', 'Pastilha de Freio');
+
+
+SELECT * FROM Veiculos
+WHERE Marca = "Ford";
+
+
+SELECT * FROM OS
+WHERE Data_Entrada > '2023-05-01';
+
+SELECT * FROM Mecanicos
+WHERE Especialidade = "Injeção Eletrônica";
+
+SELECT * FROM OS
+WHERE Status_OS = "Aguardando Peças";
+
+SELECT * FROM 
+WHERE Status = "Aguardando Peças";
+
