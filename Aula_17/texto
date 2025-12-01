@@ -140,6 +140,228 @@ WHERE Especialidade = "Injeção Eletrônica";
 SELECT * FROM OS
 WHERE Status_OS = "Aguardando Peças";
 
-SELECT * FROM 
-WHERE Status = "Aguardando Peças";
+SELECT * FROM Peca
+WHERE qtd_estoque < 4;
+
+UPDATE Mecanicos
+WHERE id_mecanico = 3;
+
+SELECT nome, preco_venda
+FROM pecas
+WHERE preco_custo > 200.00;
+
+UPDATE Pecas
+SET preco_venda = preco_venda * 1.05
+WHERE fabricante = 'Bosch';
+
+UPDATE Ordens_Servico
+SET status = 'Concluída'
+WHERE Numero_Ordem = 105;
+
+UPDATE Ordens_Servico
+SET data_conclusao = CURRENT_DATE
+WHERE status = 'Em Execução'
+  AND data_abertura < CURRENT_DATE - INTERVAL 30 DAY;
+
+UPDATE Pecas
+SET qtd_estoque = qtd_estoque * 2
+WHERE id_peca = 20;
+
+ALTER TABLE Clientes
+ADD email VARCHAR(100);
+
+ALTER TABLE Mecanicos
+MODIFY COLUMN especialidade VARCHAR(150);
+
+ALTER TABLE Ordens_Servico
+DROP COLUMN diagnostico_entrada;
+
+ALTER TABLE Pecas
+ADD CONSTRAINT chk_precos CHECK (preco_venda >= preco_custo);
+
+*
+SELECT 
+    V.placa,
+    V.modelo
+FROM Ordens_Servico OS
+JOIN Veiculos V ON OS.id_veiculo = V.id_veiculo
+WHERE OS.status = 'Em Execução';
+
+*
+SELECT DISTINCT
+    C.nome
+FROM Clientes C
+JOIN Veiculos V ON C.id_cliente = V.id_cliente
+WHERE V.marca = 'Volkswagen';
+
+*
+SELECT DISTINCT
+    M.nome
+FROM Mecanicos M
+JOIN OS_Mecanicos OSM ON M.id_mecanico = OSM.id_mecanico;
+
+*
+SELECT DISTINCT
+    S.nome_servico
+FROM Servicos S
+JOIN OS_Servicos OSS ON S.id_servico = OSS.id_servico;
+
+*
+SELECT 
+    C.id_cliente,
+    C.nome,
+    OS.id_os
+FROM Clientes C
+LEFT JOIN Ordens_Servico OS 
+       ON C.id_cliente = OS.id_cliente
+ORDER BY C.id_cliente;
+
+*
+SELECT 
+    M.id_mecanico,
+    M.nome,
+    COUNT(OSM.id_os) AS total_os
+FROM Mecanicos M
+LEFT JOIN OS_Mecanicos OSM 
+       ON M.id_mecanico = OSM.id_mecanico
+GROUP BY M.id_mecanico, M.nome
+ORDER BY total_os DESC;
+
+*
+SELECT 
+    P.id_peca,
+    P.nome,
+    COALESCE(SUM(OSP.quantidade_usada), 0) AS total_vendida
+FROM Pecas P
+LEFT JOIN OS_Pecas OSP 
+       ON P.id_peca = OSP.id_peca
+GROUP BY P.id_peca, P.nome
+ORDER BY total_vendida DESC;
+
+*
+SELECT 
+    V.id_veiculo,
+    V.placa,
+    V.modelo,
+    MAX(OS.data_abertura) AS ultima_os
+FROM Veiculos V
+LEFT JOIN Ordens_Servico OS 
+       ON V.id_veiculo = OS.id_veiculo
+GROUP BY V.id_veiculo, V.placa, V.modelo
+ORDER BY ultima_os DESC;
+
+UPDATE Pecas
+SET  preco_venda= preco_venda * 0.05
+WHERE fabricante = 'Bosch';
+
+UPDATE OS
+SET STATUS = "Concluída"
+WHERE Numero_Ordem = 105;
+
+UPDATE OS
+SET data_conclusao = CURRENT_DATE
+WHERE status = "Em Execução"
+AND data_abertura < CURRENT_DATE - INTERVAL 30 DAY;
+
+UPDATE Pecas
+SET qtd_estoque = qtd_estoque * 2
+WHERE id_peca = 20;
+
+SELECT 
+    C.id_cliente,
+    C.nome,
+    OS.id_os
+FROM Clientes C
+LEFT JOIN Ordens_Servico OS 
+       ON C.id_cliente = OS.id_cliente
+ORDER BY C.id_cliente;
+
+SELECT 
+    M.id_mecanico,
+    M.nome,
+    COUNT(OSM.id_os) AS total_os
+
+SELECT 
+    C.id_cliente,
+    C.nome,
+    OS.id_os
+FROM Clientes C
+LEFT JOIN Ordens_Servico OS 
+       ON C.id_cliente = OS.id_cliente
+ORDER BY C.id_cliente;
+
+SELECT 
+    M.id_mecanico,
+    M.nome,
+    COUNT(OSM.id_os) AS total_os
+FROM Mecanicos M
+LEFT JOIN OS_Mecanicos OSM
+       ON M.id_mecanico = OSM.id_mecanico
+GROUP BY M.id_mecanico, M.nome
+ORDER BY total_os DESC;
+
+SELECT 
+    P.id_peca,
+    P.nome,
+    COALESCE(SUM(OSP.quantidade_usada), 0) AS total_vendida
+FROM Pecas P
+LEFT JOIN OS_Pecas OSP
+       ON P.id_peca = OSP.id_peca
+GROUP BY P.id_peca, P.nome
+ORDER BY total_vendida DESC;
+
+SELECT 
+    V.id_veiculo,
+    V.placa,
+    V.modelo,
+    MAX(OS.data_abertura) AS ultima_os
+FROM Veiculos V
+LEFT JOIN Ordens_Servico OS
+       ON V.id_veiculo = OS.id_veiculo
+GROUP BY V.id_veiculo, V.placa, V.modelo
+ORDER BY ultima_os DESC;
+
+SELECT 
+    OS.id_os,
+    OS.data_abertura,
+    C.nome AS cliente
+FROM Clientes C
+RIGHT JOIN Ordens_Servico OS
+       ON C.id_cliente = OS.id_cliente;
+
+SELECT 
+    S.id_servico,
+    S.nome_servico,
+    OSS.id_os
+FROM OS_Servicos OSS
+RIGHT JOIN Servicos S
+       ON OSS.id_servico = S.id_servico;
+
+SELECT 
+    OSM.id_os,
+    OSM.id_mecanico,
+    M.nome AS nome_mecanico
+FROM Mecanicos M
+RIGHT JOIN OS_Mecanicos OSM
+       ON M.id_mecanico = OSM.id_mecanico;
+
+SELECT 
+    OS.id_os,
+    V.id_veiculo,
+    V.placa,
+    V.modelo
+FROM Ordens_Servico OS
+RIGHT JOIN Veiculos V
+       ON OS.id_veiculo = V.id_veiculo;
+
+SELECT 
+C.id_cliente,
+C.nome,
+COUNTS.OS.id_os AS total_os
+FROM Clientes C
+JOIN Ordens_Servico OS
+ON C.id_cliente = OS.id_cliente
+GROUP BY C.id_cliente, C.nome
+HAVING total_os > 3;
+
 
